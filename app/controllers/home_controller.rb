@@ -20,6 +20,9 @@ class HomeController < ApplicationController
       end
        if params[:get][:poll]
           respues = params[:get][:poll]
+          b = current_user
+          b.active_votes -= 1
+          b.save
           a = User.find(respues)
           a.active_votes += 1
           if a.save
