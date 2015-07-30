@@ -23,7 +23,10 @@
   <dialog id="window">
   	<h3>delegate vote</h3>
   	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, inventore!</p>
-  	<%=collection_radio_buttons(:post, :author_id, @users, :id, :name)%>
+  	<%= form_tag(root_path, method: "get") do %>
+  		<%=collection_radio_buttons(:get, :poll, @users, :id, :name)%>
+  		<div><%= submit_tag 'Save' %></div>
+  	<%end%>
   	<hr>
   	<button id="exit">Exit</button>
   </dialog>
