@@ -1,2 +1,68 @@
-<h1>Home#show</h1>
-<p>Find me in app/views/home/show.html.erb</p>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <%if current_user%>
+  <h1>You have <%=@user.active_votes%> votes</h1> 
+  <%if @user.active_votes >=0 %>
+  <p>What would you like?</p>
+  <!-- Trigger the modal with a button -->
+  <button id="show2">vote</button>
+  <button id="show">delegate vote</button>
+
+  <%end%>
+  <%else%>
+  <h1>You must be signed</h1> 
+  <%end%>
+
+  <dialog id="window">
+  	<h3>delegate vote</h3>
+  	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, inventore!</p>
+  	<%=collection_radio_buttons(:post, :author_id, @users, :id, :name)%>
+  	<hr>
+  	<button id="exit">Exit</button>
+  </dialog>
+
+  <dialog id="window2">
+  	<h3>How should trolling be handled online?</h3>
+  	<p>
+  		<%= form_tag(root_path, method: "get") do %>
+  			<%= radio_button("get", "category", "1")%>Censor the message
+  			<BR>
+			<%= radio_button("get", "category", "2") %>Ban the user
+			<BR>
+			<%= radio_button("get", "category", "3") %> Have a moderator decide on handling
+			<BR>
+			<%= radio_button("get", "category", "4") %>Expose them in public
+			<BR>
+			<%= radio_button("get", "category", "5") %>Nothing, trolling should be allowed
+  			<div><%= submit_tag 'Save' %></div>
+		<% end -%>
+	</p>
+  		
+  		<button id="exit2">Exit</button>
+  	</dialog>
+
+
+
+
+  	<script type="text/javascript">
+  	(function() {
+  		var dialog = document.getElementById('window');
+  		document.getElementById('show').onclick = function() {
+  			dialog.show();
+  		};
+  		document.getElementById('exit').onclick = function() {
+  			dialog.close();
+  		};
+  	})();
+
+  	(function() {
+  		var dialog = document.getElementById('window2');
+  		document.getElementById('show2').onclick = function() {
+  			dialog.show();
+  		};
+  		document.getElementById('exit2').onclick = function() {
+  			dialog.close();
+  		};
+  	})();
+
+  	</script>
