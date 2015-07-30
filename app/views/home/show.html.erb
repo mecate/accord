@@ -1,12 +1,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
   <%if current_user%>
   <h1>You have <%=@user.active_votes%> votes</h1> 
   <%if @user.active_votes >=0 %>
   <p>What would you like?</p>
   <!-- Trigger the modal with a button -->
-  <button id="show2">vote</button>
-  <button id="show">delegate vote</button>
+  <%if @user.active_votes >0%>
+  	<button id="show2">vote</button>
+  	<button id="show">delegate vote</button>
+  <%end%>
+
+  
 
   <%end%>
   <%else%>
@@ -41,7 +48,9 @@
   		<button id="exit2">Exit</button>
   	</dialog>
 
-
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+ <% end %>
 
 
   	<script type="text/javascript">
