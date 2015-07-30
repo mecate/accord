@@ -12,8 +12,15 @@
   	<button id="show2">vote</button>
   	<button id="show">delegate vote</button>
   <%end%>
+  <br>
+  <%@users.each do |user|%>
+    <p><%=user.name%>'s</p>
+    <br>
+    <button id="show2">vote</button>
+    <button id="show">delegate vote</button>
+    <hr>
+  <%end%>
 
-  
 
   <%end%>
   <%else%>
