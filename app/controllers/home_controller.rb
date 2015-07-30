@@ -3,7 +3,7 @@ class HomeController < ApplicationController
     @users = User.all
     if current_user
       @user = User.where(name: current_user.name).last
-      #@users = User.where.not(id: current_user)
+      @users = User.where.not(id: current_user)
     end
     
     if params[:get]
