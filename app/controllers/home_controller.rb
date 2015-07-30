@@ -9,7 +9,8 @@ class HomeController < ApplicationController
     if params[:get]
       if params[:get][:category]
        respues = params[:get][:category]
-       poll = Poll.create(name: "trolling", reply: respues)
+       if Poll.where(name: "trolling",id_facebook: current_user.uid ).blank?
+       poll = Poll.create(name: "trolling", reply: respues, id_facebook: current_user.uid)
         if poll.save
           flash[:success] = "poll save"
           @user.active_votes -= 1
@@ -17,12 +18,19 @@ class HomeController < ApplicationController
         else
           flash[:success] = "Error"
         end
+      else
+        flash[:success] = "already answered NOT SAVE"
+      end
+
       end
        if params[:get][:poll]
           respues = params[:get][:poll]
+          #quito tu voto
           b = current_user
           b.active_votes -= 1
           b.save
+          
+          #aumento tu voto
           a = User.find(respues)
           a.active_votes += 1
           if a.save
@@ -30,6 +38,7 @@ class HomeController < ApplicationController
           else
             flash[:success] = "Error"
           end
+
        end
     end
 
