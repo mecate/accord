@@ -1,80 +1,132 @@
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+     
+
+      <header>
+          <div class="header-content">
+              <div class="header-content-inner">
+                  <%= image_tag "accord.png", class: "img-responsive center-block center-block-top"%>
+                    <%if current_user%>
+                      <h1>You have <%=@user.active_votes%> votes</h1> <BR>
+                      <%if @user.active_votes >=0 %>
+                         <%if @user.active_votes >0 %>
+                          <p>What would you like?</p>
+                          <button type="button" class="btn btn-primary btn-xl page-scroll" data-toggle="modal" data-target="#myModal2">applying vote</button>
+
+                          <button  type="button" class="btn btn-primary btn-xl page-scroll" data-toggle="modal" data-target="#myModal">delegate vote</button>
+                          <br>
+                        <%end%>
+                      <%end%>
+                  <%else%>
+                    <p>You must be signed<p/> 
+                  <%end%>
+                  <% if current_user %>
+                  <HR>
+                    Signed in as <strong><%= current_user.name %></strong>!<BR>
+                    <%= link_to "Sign out", signout_path, id: "sign_out", class: "btn btn-primary btn-xl page-scroll" %>
+                   <% else %>
+                    <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" , class: "btn btn-primary btn-xl page-scroll"%>
+                  <% end %>
+              </div>
+          </div>
+      </header>
+
+     
+     
 
 
 
-  <%if current_user%>
-  <h1>You have <%=@user.active_votes%> votes</h1> 
-  <%if @user.active_votes >=0 %>
-  <p>What would you like?</p>
-  <!-- Trigger the modal with a button -->
-  <%if @user.active_votes >0%>
-  	<button id="show2">vote</button>
-  	<button id="show">delegate vote</button>
-  <br>
-  <%end%>
 
 
-  <%end%>
-  <%else%>
-  <h1>You must be signed</h1> 
-  <%end%>
 
-  <dialog id="window">
-  	<h3>delegate vote</h3>
-  	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, inventore!</p>
-  	<%= form_tag(root_path, method: "get") do %>
-  		<%=collection_radio_buttons(:get, :poll, @users, :id, :name)%>
-  		<div><%= submit_tag 'Save' %></div>
-  	<%end%>
-  	<hr>
-  	<button id="exit">Exit</button>
-  </dialog>
+    <dialog id="window">
 
-  <dialog id="window2">
-  	<h3>How should trolling be handled online?</h3>
-  	<p>
-  		<%= form_tag(root_path, method: "get") do %>
-  			<%= radio_button("get", "category", "1")%>Censor the message
-  			<BR>
-			<%= radio_button("get", "category", "2") %>Ban the user
-			<BR>
-			<%= radio_button("get", "category", "3") %> Have a moderator decide on handling
-			<BR>
-			<%= radio_button("get", "category", "4") %>Expose them in public
-			<BR>
-			<%= radio_button("get", "category", "5") %>Nothing, trolling should be allowed
-  			<div><%= submit_tag 'Save' %></div>
-		<% end -%>
-	</p>
-  		
-  		<button id="exit2">Exit</button>
-  	</dialog>
+    	<button id="exit">Exit</button>
+    </dialog>
 
-<% flash.each do |key, value| %>
-  <div class="alert alert-<%= key %>"><%= value %></div>
- <% end %>
+    <dialog id="window2">
+    	<h3></h3>
+   
+    		
+    		<button id="exit2">Exit</button>
+    	</dialog>
 
 
-  	<script type="text/javascript">
-  	(function() {
-  		var dialog = document.getElementById('window');
-  		document.getElementById('show').onclick = function() {
-  			dialog.show();
-  		};
-  		document.getElementById('exit').onclick = function() {
-  			dialog.close();
-  		};
-  	})();
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">delegate vote</h4>
+        </div>
+        <div class="modal-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, inventore!</p>
+          <%= form_tag(root_path, method: "get") do %>
+            <%=collection_radio_buttons(:get, :poll, @users, :id, :name)%>
+            <div><%= submit_tag 'Save' %></div>
+          <%end%>
+          <hr>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  	(function() {
-  		var dialog = document.getElementById('window2');
-  		document.getElementById('show2').onclick = function() {
-  			dialog.show();
-  		};
-  		document.getElementById('exit2').onclick = function() {
-  			dialog.close();
-  		};
-  	})();
+  <!-- Modal 2-->
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal2" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">
+              Which public entrepreneurship project do you think it could significantly change the life of people?
+          </h4>
+        </div>
+        <div class="modal-body">
+        <p>
+          <%= form_tag(root_path, method: "get") do %>
+            <%= radio_button("get", "category", "1")%>Accord
+            <BR>
+            <%= radio_button("get", "category", "2")%>Intellicane
+            <BR>
+            <%= radio_button("get", "category", "3")%>MaKernel
+            <BR>
+            <%= radio_button("get", "category", "4")%>Maven
+            <BR>
+            <%= radio_button("get", "category", "5")%>Nuco
+            <BR>
+            <%= radio_button("get", "category", "6")%>PEC
+            <BR>
+            <%= radio_button("get", "category", "7")%>Puente Digital
+            <BR>
+            <%= radio_button("get", "category", "8")%>Robit
+            <BR>
+            <%= radio_button("get", "category", "9")%>Semillero
+            <BR>
+            <%= radio_button("get", "category", "10")%>Soco
+            <BR>
+            <%= radio_button("get", "category", "11")%>Team Auxilio!
+            <BR>
+            <%= radio_button("get", "category", "12")%>Urban Spaces
+            <BR>
+            <div><%= submit_tag 'Save' %></div>
+          <% end -%>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  	</script>
+
+
+
+
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
+   <% end %>
+
+

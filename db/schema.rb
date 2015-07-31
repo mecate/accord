@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 20150731001417) do
   create_table "relationpolls", force: :cascade do |t|
     t.text     "user"
     t.text     "donator"
-    t.boolean  "used"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "used",       default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "users", force: :cascade do |t|
