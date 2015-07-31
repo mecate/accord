@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
     if current_user
       @user = User.where(name: current_user.name).last
-      #@users = User.where.not(id: current_user)
+      @users = User.where.not(id: current_user)
       @relations = Relationpoll.where(user: current_user.uid)
     end
     
@@ -13,11 +13,17 @@ class HomeController < ApplicationController
       if params[:get][:category]
        respues = params[:get][:category]
        if Poll.where(name: "trolling",id_facebook: current_user.uid ).blank?
-       poll = Poll.create(name: "trolling", reply: respues, id_facebook: current_user.uid)
+          poll = Poll.create(name: "trolling", reply: respues, id_facebook: current_user.uid)
         if poll.save
           flash[:success] = "poll save"
           @user.active_votes -= 1
           @user.save
+          Relationpoll.each do |relacion|
+            if relacion.user == current_user.uid
+               poll = Poll.create(name: "trolling", reply: respues, id_facebook: current_user.uid)
+               pol.save
+            end
+          end
         else
           flash[:success] = "Error"
         end
@@ -40,10 +46,9 @@ class HomeController < ApplicationController
           if a.save
              flash[:success] = "vote delegate"
              if Relationpoll.where(user: b.uid, donator: a.uid).blank?
-                m = Relationpoll.create(user: b.uid, donator: a.uid)
+                m = Relationpoll.create(user: b.uid, donator: a.uid, used: false)
                 m.save
             end
-
           else
             flash[:success] = "Error"
           end
