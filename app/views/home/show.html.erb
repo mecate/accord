@@ -15,7 +15,7 @@
   <br>
 
   <%@relations.each do |relation|%>
-    <p><%=User.where(uid: relation.donator)%>'s</p>
+    <p><%=User.where(uid: relation.donator).last.name%>'s vote</p>
     <br>
     <button id="show2">vote</button>
     <button id="show">delegate vote</button>
