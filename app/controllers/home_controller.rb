@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
     if current_user
       @user = User.where(name: current_user.name).last
-      @users = User.where.not(id: current_user)
+      #@users = User.where.not(id: current_user)
       @relations = Relationpoll.where(user: current_user.uid)
     end
     
