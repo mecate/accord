@@ -23,7 +23,7 @@ class HomeController < ApplicationController
            
             if relacion.user == current_user.uid  #6
                poll = Poll.create(name: "trolling", reply: respues, id_facebook: current_user.uid)
-               pol.save 
+               poll.save 
             end #6
 
           end#5
