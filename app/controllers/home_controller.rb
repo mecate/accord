@@ -34,6 +34,7 @@ class HomeController < ApplicationController
       end
        if params[:get][:poll]
           respues = params[:get][:poll]
+           if Relationpoll.where(user: b.uid, donator: a.uid).blank?
           #quito mi voto
           b = current_user
           b.active_votes -= 1
@@ -45,14 +46,13 @@ class HomeController < ApplicationController
 
           if a.save
              flash[:success] = "vote delegate"
-             if Relationpoll.where(user: b.uid, donator: a.uid).blank?
                 m = Relationpoll.create(user: b.uid, donator: a.uid, used: false)
                 m.save
-            end
+           
           else
             flash[:success] = "Error"
           end
-
+        end
        end
     end
 
