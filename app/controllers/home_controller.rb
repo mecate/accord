@@ -18,7 +18,7 @@ class HomeController < ApplicationController
           flash[:success] = "poll save"
           @user.active_votes -= 1
           @user.save
-          Relationpoll.each do |relacion|
+          @relations.each do |relacion|
             if relacion.user == current_user.uid
                poll = Poll.create(name: "trolling", reply: respues, id_facebook: current_user.uid)
                pol.save
