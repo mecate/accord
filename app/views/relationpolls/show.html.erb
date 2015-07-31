@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @relationpoll.user %>
+</p>
+
+<p>
+  <strong>Donator:</strong>
+  <%= @relationpoll.donator %>
+</p>
+
+<%= link_to 'Edit', edit_relationpoll_path(@relationpoll) %> |
+<%= link_to 'Back', relationpolls_path %>

@@ -1,9 +1,12 @@
 class HomeController < ApplicationController
   def show
     @users = User.all
+    @relations = Relationpoll.all
+
     if current_user
       @user = User.where(name: current_user.name).last
       @users = User.where.not(id: current_user)
+      @relations = Relationpoll.where(user: current_user.uid)
     end
     
     if params[:get]
@@ -33,8 +36,12 @@ class HomeController < ApplicationController
           #aumento tu voto
           a = User.find(respues)
           a.active_votes += 1
+
           if a.save
              flash[:success] = "vote delegate"
+             m = Relationpoll.create(user: b.uid, donator: a.uid)
+             m.save
+
           else
             flash[:success] = "Error"
           end

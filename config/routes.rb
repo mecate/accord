@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :relationpolls
+
   resources :polls
 
     get 'auth/:provider/callback', to: 'sessions#create'
